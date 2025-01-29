@@ -1,5 +1,7 @@
 package slc.tamagochi;
 
+import java.util.EnumMap;
+
 /**
  *
  * @author Sergio López Casado
@@ -36,66 +38,27 @@ public enum Raza {
     AKITA_INU("Akita Inu", -0.1, -0.2, 0.4, 0.1, 0.3, -0.4, 0.3, -0.3, -0.5); // Independiente, territorial y no muy sociable.
 
     private final String nombre;
-    private final double energiaMod;
-    private final double hambreMod;
-    private final double saludMod;
-    private final double limpiezaMod;
-    private final double suennoMod;
-    private final double ansiedadMod;
-    private final double obedienciaMod;
-    private final double sociabilidadMod;
-    private final double apegoMod;
+    private final EnumMap<Stat, Double> mods;
 
     private Raza(String nombre, double energiaMod, double hambreMod, double saludMod, double limpiezaMod, double suennoMod, double ansiedadMod, double obedienciaMod, double sociabilidadMod, double apegoMod) {
         this.nombre = nombre;
-        this.energiaMod = energiaMod;
-        this.hambreMod = hambreMod;
-        this.saludMod = saludMod;
-        this.limpiezaMod = limpiezaMod;
-        this.suennoMod = suennoMod;
-        this.ansiedadMod = ansiedadMod;
-        this.obedienciaMod = obedienciaMod;
-        this.sociabilidadMod = sociabilidadMod;
-        this.apegoMod = apegoMod;
+        this.mods = new EnumMap<>(Stat.class);
+        this.mods.put(Stat.ENERGIA, energiaMod);
+        this.mods.put(Stat.HAMBRE, hambreMod);
+        this.mods.put(Stat.SALUD, saludMod);
+        this.mods.put(Stat.LIMPIEZA, limpiezaMod);
+        this.mods.put(Stat.SUENNO, suennoMod);
+        this.mods.put(Stat.ANSIEDAD, ansiedadMod);
+        this.mods.put(Stat.OBEDIENCIA, obedienciaMod);
+        this.mods.put(Stat.SOCIABILIDAD, sociabilidadMod);
+        this.mods.put(Stat.APEGO, apegoMod);
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public double getEnergiaMod() {
-        return energiaMod;
-    }
-
-    public double getHambreMod() {
-        return hambreMod;
-    }
-
-    public double getSaludMod() {
-        return saludMod;
-    }
-
-    public double getLimpiezaMod() {
-        return limpiezaMod;
-    }
-
-    public double getSuennoMod() {
-        return suennoMod;
-    }
-
-    public double getAnsiedadMod() {
-        return ansiedadMod;
-    }
-
-    public double getObedienciaMod() {
-        return obedienciaMod;
-    }
-
-    public double getSociabilidadMod() {
-        return sociabilidadMod;
-    }
-
-    public double getApegoMod() {
-        return apegoMod;
+    public double getMod(Stat stat) {
+        return mods.getOrDefault(stat, 0.0);
     }
 }

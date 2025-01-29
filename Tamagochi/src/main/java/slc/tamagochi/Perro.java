@@ -42,15 +42,15 @@ public class Perro {
             mods.put(stat, 1.0);
         }
         // Aplicar modificadores de la raza
-        mods.put(Stat.ENERGIA, 1 + raza.getEnergiaMod());
-        mods.put(Stat.HAMBRE, 1 + raza.getHambreMod());
-        mods.put(Stat.SALUD, 1 + raza.getSaludMod());
-        mods.put(Stat.LIMPIEZA, 1 + raza.getLimpiezaMod());
-        mods.put(Stat.SUENNO, 1 + raza.getSuennoMod());
-        mods.put(Stat.ANSIEDAD, 1 + raza.getAnsiedadMod());
-        mods.put(Stat.OBEDIENCIA, 1 + raza.getObedienciaMod());
-        mods.put(Stat.SOCIABILIDAD, 1 + raza.getSociabilidadMod());
-        mods.put(Stat.APEGO, 1 + raza.getApegoMod());
+        mods.put(Stat.ENERGIA, 1 + raza.getMod(Stat.ENERGIA));
+        mods.put(Stat.HAMBRE, 1 + raza.getMod(Stat.HAMBRE));
+        mods.put(Stat.SALUD, 1 + raza.getMod(Stat.SALUD));
+        mods.put(Stat.LIMPIEZA, 1 + raza.getMod(Stat.LIMPIEZA));
+        mods.put(Stat.SUENNO, 1 + raza.getMod(Stat.SUENNO));
+        mods.put(Stat.ANSIEDAD, 1 + raza.getMod(Stat.ANSIEDAD));
+        mods.put(Stat.OBEDIENCIA, 1 + raza.getMod(Stat.OBEDIENCIA));
+        mods.put(Stat.SOCIABILIDAD, 1 + raza.getMod(Stat.SOCIABILIDAD));
+        mods.put(Stat.APEGO, 1 + raza.getMod(Stat.APEGO));
 
         // Aplicar modificadores por edad
         if (edad <= 2) {// Cachorro
@@ -92,7 +92,7 @@ public class Perro {
     private int statInicial(int min, int max, double modificador) {
         int valorAleatorio = rand.nextInt((max - min) + 1) + min;
         int resultadoFinal = (int) Math.round(valorAleatorio * modificador);
-        return Math.clamp(resultadoFinal, BASE_MIN_LEVEL, BASE_MAX_LEVEL);
+        return Herramientas.clamp(resultadoFinal, BASE_MIN_LEVEL, BASE_MAX_LEVEL);
     }
 
     public String getNombre() {
@@ -118,10 +118,9 @@ public class Perro {
     public Set<Estado> getEstados() {
         return estados;
     }
-    
-    public String edadToString(){
-        String edadString = getAnnos() + " años y " + getMeses() + " meses";
-        return edadString;
+
+    public String edadToString() {
+        return getAnnos() + " años y " + getMeses() + " meses";
     }
 
     public int getAnnos() {
@@ -134,26 +133,32 @@ public class Perro {
     }
 
     public void setEdad(double edad) {
-        this.edad = edad;
+        if (edad < 0 || edad > 29) { // 29 años es la máxima edad registrada
+            throw new IllegalArgumentException("La edad debe estar entre 0 y 29 años.");
+    }
+    this.edad = edad;
     }
 
     public void setStat(Stat stat, int valor) {
-        stats.put(stat, Math.clamp(valor, BASE_MIN_LEVEL, BASE_MAX_LEVEL));
+        stats.put(stat, Herramientas.clamp(valor, BASE_MIN_LEVEL, BASE_MAX_LEVEL));
         actualizarEstados();
     }
 
     public void mostrarEstado() {
         StringBuilder sb = new StringBuilder();
-        sb.append("🐶 Nombre: ").append(nombre).append(" | Raza: ").append(raza).append(" | Edad: ").append(edadToString()).append(".\n");
+        sb.append(String.format("🐶 Nombre: %s | Raza: %s | Edad: %s\n", nombre, raza, edadToString()));
+
         for (Stat stat : Stat.values()) {
-            sb.append(stat.getEmoji()).append(" ").append(stat.getNombre()).append(": ").append(stats.get(stat)).append("/100\n");
+            sb.append(String.format("%s %s: %d/100\n",
+                    stat.getEmoji(), stat.getNombre(), stats.get(stat)));
         }
+
         sb.append("📌 Estados activos: ").append(estados.isEmpty() ? "Ninguno" : estados);
         System.out.println(sb);
     }
 
     private void actualizarEstados() {
-        estados.clear();
+        Set<Estado> nuevosEstados = new HashSet<>();
 
         for (Estado estado : Estado.values()) {
             int valorStat = stats.getOrDefault(estado.getStatAsociado(), 0);
@@ -161,8 +166,14 @@ public class Perro {
             Integer max = estado.getValorMax();
 
             if ((min != null && valorStat >= min) || (max != null && valorStat <= max)) {
-                estados.add(estado);
+                nuevosEstados.add(estado);
             }
+        }
+
+        // Solo actualizar si hay cambios, evitando reseteo innecesario
+        if (!estados.equals(nuevosEstados)) {
+            estados.clear();
+            estados.addAll(nuevosEstados);
         }
     }
 }

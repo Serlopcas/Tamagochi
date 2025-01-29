@@ -21,7 +21,7 @@ public enum Estado {
     REBELDE(Stat.OBEDIENCIA, null, 30, "No obedece órdenes"),
     SOLITARIO(Stat.APEGO, null, 30, "Se siente solo"),
     APEGADO(Stat.APEGO, 80, null, "Es muy dependiente del dueño"),
-    ASUSTADO(Stat.ANSIEDAD, 70,  null, "Está temeroso"),
+    ASUSTADO(Stat.ANSIEDAD, 70, null, "Está temeroso"),
     AGRESIVO(Stat.SOCIABILIDAD, null, 20, "Muestra comportamiento agresivo");
 
     private final Stat statAsociado;
@@ -49,6 +49,11 @@ public enum Estado {
     }
 
     public String getDescripcion() {
+        return descripcion;
+    }
+
+    @Override
+    public String toString() {
         return descripcion;
     }
 }

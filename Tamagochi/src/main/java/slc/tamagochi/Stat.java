@@ -31,4 +31,9 @@ public enum Stat {
     public String getEmoji() {
         return emoji;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }
