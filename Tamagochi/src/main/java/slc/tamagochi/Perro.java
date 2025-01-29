@@ -33,47 +33,35 @@ public class Perro {
         this.mods = new EnumMap<>(Stat.class);
         this.estados = new HashSet<>();
 
-        calcularModificadores();
+        inicializarModificadores();
         inicializarStats();
     }
 
-    private void calcularModificadores() {
+    private void inicializarModificadores() {
         for (Stat stat : Stat.values()) {
-            mods.put(stat, 1.0);
+            mods.put(stat, 1.0 + raza.getMod(stat));
         }
-        // Aplicar modificadores de la raza
-        mods.put(Stat.ENERGIA, 1 + raza.getMod(Stat.ENERGIA));
-        mods.put(Stat.HAMBRE, 1 + raza.getMod(Stat.HAMBRE));
-        mods.put(Stat.SALUD, 1 + raza.getMod(Stat.SALUD));
-        mods.put(Stat.LIMPIEZA, 1 + raza.getMod(Stat.LIMPIEZA));
-        mods.put(Stat.SUENNO, 1 + raza.getMod(Stat.SUENNO));
-        mods.put(Stat.ANSIEDAD, 1 + raza.getMod(Stat.ANSIEDAD));
-        mods.put(Stat.OBEDIENCIA, 1 + raza.getMod(Stat.OBEDIENCIA));
-        mods.put(Stat.SOCIABILIDAD, 1 + raza.getMod(Stat.SOCIABILIDAD));
-        mods.put(Stat.APEGO, 1 + raza.getMod(Stat.APEGO));
 
         // Aplicar modificadores por edad
         if (edad <= 2) {// Cachorro
-            mods.put(Stat.ENERGIA, mods.get(Stat.ENERGIA) + 0.20);
-            mods.put(Stat.HAMBRE, mods.get(Stat.HAMBRE) + 0.10);
-            mods.put(Stat.SALUD, mods.get(Stat.SALUD) + 0.05);
-            mods.put(Stat.LIMPIEZA, mods.get(Stat.LIMPIEZA) - 0.10);
-            mods.put(Stat.SUENNO, mods.get(Stat.SUENNO) + 0.15);
-            mods.put(Stat.ANSIEDAD, mods.get(Stat.ANSIEDAD) + 0.15);
-            mods.put(Stat.OBEDIENCIA, mods.get(Stat.OBEDIENCIA) - 0.20);
-            mods.put(Stat.SOCIABILIDAD, mods.get(Stat.SOCIABILIDAD) + 0.10);
-            mods.put(Stat.APEGO, mods.get(Stat.APEGO) + 0.15);
+            aplicarModificadores(0.20, 0.10, 0.05, -0.10, 0.15, 0.15, -0.20, 0.10, 0.15);
         } else if (edad >= 9) {// Senior
-            mods.put(Stat.ENERGIA, mods.get(Stat.ENERGIA) - 0.25);
-            mods.put(Stat.HAMBRE, mods.get(Stat.HAMBRE) - 0.10);
-            mods.put(Stat.SALUD, mods.get(Stat.SALUD) - 0.25);
-            mods.put(Stat.LIMPIEZA, mods.get(Stat.LIMPIEZA) + 0.10);
-            mods.put(Stat.SUENNO, mods.get(Stat.SUENNO) - 0.20);
-            mods.put(Stat.ANSIEDAD, mods.get(Stat.ANSIEDAD) + 0.10);
-            mods.put(Stat.OBEDIENCIA, mods.get(Stat.OBEDIENCIA) - 0.15);
-            mods.put(Stat.SOCIABILIDAD, mods.get(Stat.SOCIABILIDAD) - 0.15);
-            mods.put(Stat.APEGO, mods.get(Stat.APEGO) + 0.10);
+            aplicarModificadores(-0.25, -0.10, -0.25, 0.10, -0.20, 0.10, -0.15, -0.15, 0.10);
         }
+    }
+
+    private void aplicarModificadores(double energia, double hambre, double salud, double limpieza,
+            double suenno, double ansiedad, double obediencia,
+            double sociabilidad, double apego) {
+        mods.put(Stat.ENERGIA, mods.getOrDefault(Stat.ENERGIA, 1.0) + energia);
+        mods.put(Stat.HAMBRE, mods.getOrDefault(Stat.HAMBRE, 1.0) + hambre);
+        mods.put(Stat.SALUD, mods.getOrDefault(Stat.SALUD, 1.0) + salud);
+        mods.put(Stat.LIMPIEZA, mods.getOrDefault(Stat.LIMPIEZA, 1.0) + limpieza);
+        mods.put(Stat.SUENNO, mods.getOrDefault(Stat.SUENNO, 1.0) + suenno);
+        mods.put(Stat.ANSIEDAD, mods.getOrDefault(Stat.ANSIEDAD, 1.0) + ansiedad);
+        mods.put(Stat.OBEDIENCIA, mods.getOrDefault(Stat.OBEDIENCIA, 1.0) + obediencia);
+        mods.put(Stat.SOCIABILIDAD, mods.getOrDefault(Stat.SOCIABILIDAD, 1.0) + sociabilidad);
+        mods.put(Stat.APEGO, mods.getOrDefault(Stat.APEGO, 1.0) + apego);
     }
 
     private void inicializarStats() {
@@ -120,7 +108,7 @@ public class Perro {
     }
 
     public String edadToString() {
-        return getAnnos() + " años y " + getMeses() + " meses";
+        return String.format("%d años y %d meses", getAnnos(), getMeses());
     }
 
     public int getAnnos() {
@@ -128,15 +116,14 @@ public class Perro {
     }
 
     public int getMeses() {
-        double meses = (edad - getAnnos()) * 12;
-        return (int) meses;
+        return (int) ((edad - getAnnos()) * 12);
     }
 
     public void setEdad(double edad) {
         if (edad < 0 || edad > 29) { // 29 años es la máxima edad registrada
             throw new IllegalArgumentException("La edad debe estar entre 0 y 29 años.");
-    }
-    this.edad = edad;
+        }
+        this.edad = edad;
     }
 
     public void setStat(Stat stat, int valor) {
@@ -170,7 +157,6 @@ public class Perro {
             }
         }
 
-        // Solo actualizar si hay cambios, evitando reseteo innecesario
         if (!estados.equals(nuevosEstados)) {
             estados.clear();
             estados.addAll(nuevosEstados);
