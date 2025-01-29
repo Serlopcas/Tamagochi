@@ -7,24 +7,67 @@ import java.util.Random;
 import java.util.Set;
 
 /**
+ * Clase que representa un perro con diferentes atributos y estados dinámicos.
+ * Cada perro tiene estadísticas (energía, hambre, salud, etc.), modificadores
+ * según su raza y edad, y puede estar en ciertos estados según su condición.
  *
  * @author Sergio López Casado
  */
 public class Perro {
 
+    /**
+     * Valor máximo para las estadísticas del perro
+     */
     private static final int BASE_MAX_LEVEL = 100;
+
+    /**
+     * Valor mínimo para las estadísticas del perro
+     */
     private static final int BASE_MIN_LEVEL = 0;
+
+    /**
+     * Generador de números aleatorios para inicializar los valores de los stats
+     */
     private static final Random rand = new Random();
 
+    /**
+     * Nombre del perro
+     */
     private final String nombre;
+
+    /**
+     * Raza del perro
+     */
     private final Raza raza;
+
+    /**
+     * Edad del perro en años y fracción de meses
+     */
     private double edad;
 
+    /**
+     * Mapa que almacena las estadísticas del perro
+     */
     private final Map<Stat, Integer> stats;
+
+    /**
+     * Mapa que almacena los modificadores aplicados a las estadísticas
+     */
     private final Map<Stat, Double> mods;
 
+    /**
+     * Conjunto de estados actuales del perro
+     */
     private final Set<Estado> estados;
 
+    /**
+     * Constructor para inicializar un nuevo perro con nombre, raza y edad. Se
+     * calculan automáticamente sus estadísticas y modificadores.
+     *
+     * @param nombre Nombre del perro
+     * @param raza Raza del perro
+     * @param edad Edad del perro en años
+     */
     public Perro(String nombre, Raza raza, int edad) {
         this.nombre = nombre;
         this.raza = raza;
@@ -37,6 +80,10 @@ public class Perro {
         inicializarStats();
     }
 
+    /**
+     * Inicializa los modificadores de los stats, aplicando los efectos de la
+     * raza y la edad.
+     */
     private void inicializarModificadores() {
         for (Stat stat : Stat.values()) {
             mods.put(stat, 1.0 + raza.getMod(stat));
@@ -50,6 +97,21 @@ public class Perro {
         }
     }
 
+    /**
+     * Actualiza el conjunto de modificadores de los stats del perro.
+     *
+     * @param energia Cantidad a añadir/sustraer del Modificador de energía
+     * @param hambre Cantidad a añadir/sustraer del Modificador de hambre
+     * @param salud Cantidad a añadir/sustraer del Modificador de salud
+     * @param limpieza Cantidad a añadir/sustraer del Modificador de limpieza
+     * @param suenno Cantidad a añadir/sustraer del Modificador de sueño
+     * @param ansiedad Cantidad a añadir/sustraer del Modificador de ansiedad
+     * @param obediencia Cantidad a añadir/sustraer del Modificador de
+     * obediencia
+     * @param sociabilidad Cantidad a añadir/sustraer del Modificador de
+     * sociabilidad
+     * @param apego Cantidad a añadir/sustraer del Modificador de apego
+     */
     private void aplicarModificadores(double energia, double hambre, double salud, double limpieza,
             double suenno, double ansiedad, double obediencia,
             double sociabilidad, double apego) {
@@ -64,6 +126,10 @@ public class Perro {
         mods.put(Stat.APEGO, mods.getOrDefault(Stat.APEGO, 1.0) + apego);
     }
 
+    /**
+     * Inicializa los valores base de los stats del perro aplicando los
+     * modificadores.
+     */
     private void inicializarStats() {
         stats.put(Stat.ENERGIA, BASE_MAX_LEVEL);
         stats.put(Stat.HAMBRE, BASE_MIN_LEVEL);
@@ -77,48 +143,109 @@ public class Perro {
         stats.put(Stat.APEGO, statInicial(20, 80, mods.get(Stat.APEGO)));
     }
 
+    /**
+     * Calcula un valor inicial aleatorio para un stat dentro de un rango y lo
+     * ajusta con su modificador.
+     *
+     * @param min Valor mínimo
+     * @param max Valor máximo
+     * @param modificador Modificador aplicado al stat
+     * @return Valor inicial ajustado
+     */
     private int statInicial(int min, int max, double modificador) {
         int valorAleatorio = rand.nextInt((max - min) + 1) + min;
         int resultadoFinal = (int) Math.round(valorAleatorio * modificador);
         return Herramientas.clamp(resultadoFinal, BASE_MIN_LEVEL, BASE_MAX_LEVEL);
     }
 
+    /**
+     * Obtiene el nombre del perro.
+     *
+     * @return Nombre del perro.
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * Obtiene la raza del perro.
+     *
+     * @return Raza del perro.
+     */
     public Raza getRaza() {
         return raza;
     }
 
+    /**
+     * Obtiene la edad actual del perro en años (puede incluir decimales para
+     * los meses).
+     *
+     * @return Edad del perro en años.
+     */
     public double getEdad() {
         return edad;
     }
 
+    /**
+     * Obtiene el valor actual de una estadística específica del perro.
+     *
+     * @param stat La estadística a consultar.
+     * @return Valor de la estadística, o 0 si no está definida.
+     */
     public int getStat(Stat stat) {
         return stats.getOrDefault(stat, 0);
     }
 
+    /**
+     * Obtiene el modificador aplicado a una estadística específica del perro.
+     *
+     * @param stat La estadística a consultar.
+     * @return Modificador aplicado a la estadística, por defecto 1.0.
+     */
     public double getMod(Stat stat) {
         return mods.getOrDefault(stat, 1.0);
     }
 
+    /**
+     * Obtiene el conjunto de estados actuales del perro.
+     *
+     * @return Conjunto de estados en los que se encuentra el perro.
+     */
     public Set<Estado> getEstados() {
         return estados;
     }
 
+    /**
+     * Devuelve la edad del perro en un formato legible, separando años y meses.
+     *
+     * @return Cadena con la edad en años y meses.
+     */
     public String edadToString() {
         return String.format("%d años y %d meses", getAnnos(), getMeses());
     }
 
+    /**
+     * @return La edad en años completos
+     */
     public int getAnnos() {
         return (int) edad;
     }
 
+    /**
+     * @return La edad en meses restantes después de los años
+     */
     public int getMeses() {
         return (int) ((edad - getAnnos()) * 12);
     }
 
+    /**
+     * Establece la nueva edad del perro asegurando que esté dentro del rango
+     * válido (0-29 años).
+     *
+     * @param edad Nueva edad del perro en años.
+     * @throws IllegalArgumentException Si la edad está fuera del rango
+     * permitido.
+     */
     public void setEdad(double edad) {
         if (edad < 0 || edad > 29) { // 29 años es la máxima edad registrada
             throw new IllegalArgumentException("La edad debe estar entre 0 y 29 años.");
@@ -126,11 +253,23 @@ public class Perro {
         this.edad = edad;
     }
 
+    /**
+     * Establece un nuevo valor para una estadística del perro, asegurando que
+     * esté dentro de los límites permitidos. También actualiza los estados del
+     * perro en función del nuevo valor de la estadística.
+     *
+     * @param stat Estadística a modificar.
+     * @param valor Nuevo valor de la estadística.
+     */
     public void setStat(Stat stat, int valor) {
         stats.put(stat, Herramientas.clamp(valor, BASE_MIN_LEVEL, BASE_MAX_LEVEL));
         actualizarEstados();
     }
 
+    /**
+     * Muestra el estado actual del perro, incluyendo sus estadísticas y estados
+     * activos. Imprime la información en la consola.
+     */
     public void mostrarEstado() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("🐶 Nombre: %s | Raza: %s | Edad: %s\n", nombre, raza, edadToString()));
@@ -144,6 +283,9 @@ public class Perro {
         System.out.println(sb);
     }
 
+    /**
+     * Actualiza los estados del perro en función de sus estadísticas actuales.
+     */
     private void actualizarEstados() {
         Set<Estado> nuevosEstados = new HashSet<>();
 
