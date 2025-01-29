@@ -1,6 +1,8 @@
 package slc.tamagochi;
 
 /**
+ * Representa un estado que un perro puede tener en función de sus estadísticas.
+ * Cada estado está vinculado a una estadística y tiene condiciones de activación.
  *
  * @author Sergio López Casado
  */
@@ -29,6 +31,14 @@ public enum Estado {
     private final Integer valorMax;
     private final String descripcion;
 
+    /**
+     * Constructor de un estado.
+     *
+     * @param statAsociado La estadística que influye en este estado.
+     * @param valorMin Valor mínimo para que se active el estado (puede ser null).
+     * @param valorMax Valor máximo para que se active el estado (puede ser null).
+     * @param descripcion Descripción del estado.
+     */
     Estado(Stat statAsociado, Integer valorMin, Integer valorMax, String descripcion) {
         this.statAsociado = statAsociado;
         this.valorMin = valorMin;
@@ -36,18 +46,38 @@ public enum Estado {
         this.descripcion = descripcion;
     }
 
+    /**
+     * Obtiene la estadística asociada a este estado.
+     *
+     * @return La estadística vinculada al estado.
+     */
     public Stat getStatAsociado() {
         return statAsociado;
     }
 
+    /**
+     * Obtiene el valor mínimo que activa este estado.
+     *
+     * @return El valor mínimo o null si no hay límite inferior.
+     */
     public Integer getValorMin() {
         return valorMin;
     }
 
+    /**
+     * Obtiene el valor máximo que activa este estado.
+     *
+     * @return El valor máximo o null si no hay límite superior.
+     */
     public Integer getValorMax() {
         return valorMax;
     }
 
+    /**
+     * Obtiene la descripción del estado.
+     *
+     * @return La descripción del estado.
+     */
     public String getDescripcion() {
         return descripcion;
     }

@@ -3,7 +3,11 @@ package slc.tamagochi;
 import java.util.EnumMap;
 
 /**
- *
+ * Representa las diferentes razas de perros, cada una con modificadores únicos para sus estadísticas.
+ * Estos modificadores afectan la manera en que un perro evoluciona en términos de energía, hambre, salud, limpieza, etc.
+ * 
+ * Cada raza tiene valores que influyen en los **modificadores** de las estadísticas del perro.
+ * 
  * @author Sergio López Casado
  */
 public enum Raza {
@@ -40,6 +44,20 @@ public enum Raza {
     private final String nombre;
     private final EnumMap<Stat, Double> mods;
 
+    /**
+     * Constructor para definir los modificadores de cada raza.
+     *
+     * @param nombre Nombre de la raza.
+     * @param energiaMod Modificador de energía.
+     * @param hambreMod Modificador de hambre.
+     * @param saludMod Modificador de salud.
+     * @param limpiezaMod Modificador de limpieza.
+     * @param suennoMod Modificador de sueño.
+     * @param ansiedadMod Modificador de ansiedad.
+     * @param obedienciaMod Modificador de obediencia.
+     * @param sociabilidadMod Modificador de sociabilidad.
+     * @param apegoMod Modificador de apego.
+     */
     private Raza(String nombre, double energiaMod, double hambreMod, double saludMod, double limpiezaMod, double suennoMod, double ansiedadMod, double obedienciaMod, double sociabilidadMod, double apegoMod) {
         this.nombre = nombre;
         this.mods = new EnumMap<>(Stat.class);
@@ -54,10 +72,21 @@ public enum Raza {
         this.mods.put(Stat.APEGO, apegoMod);
     }
 
+    /**
+     * Obtiene el nombre de la raza.
+     *
+     * @return Nombre de la raza.
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * Obtiene el modificador de una estadística específica para esta raza.
+     *
+     * @param stat La estadística de la que se quiere obtener el modificador.
+     * @return El modificador correspondiente a la estadística, o 0.0 si no existe.
+     */
     public double getMod(Stat stat) {
         return mods.getOrDefault(stat, 0.0);
     }

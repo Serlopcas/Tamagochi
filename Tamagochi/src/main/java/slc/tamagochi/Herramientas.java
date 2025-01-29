@@ -1,32 +1,22 @@
 package slc.tamagochi;
 
 /**
- *
- * @author Sergio Lopez Casado
+ * Clase de utilidad que proporciona métodos estáticos auxiliares para el juego.
+ * 
+ * @author Sergio López Casado
  */
 public class Herramientas {
     
     /**
-     * Existe en Java 21 pero no en versiones anteriores por lo que se crea
-     * aquí para evitar incompatibilidades.
+     * Método de clamp para asegurar que un valor esté dentro de un rango dado.
      * 
-     * Clamps the value to fit between min and max. If the value is less
-     * than {@code min}, then {@code min} is returned. If the value is greater
-     * than {@code max}, then {@code max} is returned. Otherwise, the original
-     * value is returned.
-     * <p>
-     * While the original value of type long may not fit into the int type,
-     * the bounds have the int type, so the result always fits the int type.
-     * This allows to use method to safely cast long value to int with
-     * saturation.
+     * Este método existe en Java 21, pero se implementa aquí para compatibilidad con versiones anteriores.
      * 
-     * @param value value to clamp
-     * @param min minimal allowed value
-     * @param max maximal allowed value
-     * @return a clamped value that fits into {@code min..max} interval
-     * @throws IllegalArgumentException if {@code min > max}
-     * 
-     * @since 21
+     * @param value Valor a ajustar.
+     * @param min Valor mínimo permitido.
+     * @param max Valor máximo permitido.
+     * @return Un valor ajustado dentro del rango especificado.
+     * @throws IllegalArgumentException si {@code min > max}.
      */
     public static int clamp(long value, int min, int max) {
         if (min > max) {
