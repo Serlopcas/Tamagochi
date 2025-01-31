@@ -54,12 +54,12 @@ public class Perro {
     /**
      * Mapa que almacena las estadísticas del perro
      */
-    private final Map<Stat, Integer> stats;
+    private final Map<StatPerro, Integer> stats;
 
     /**
      * Mapa que almacena los modificadores aplicados a las estadísticas
      */
-    private final Map<Stat, Double> mods;
+    private final Map<StatPerro, Double> mods;
 
     /**
      * Conjunto de estados actuales del perro
@@ -78,8 +78,8 @@ public class Perro {
         this.nombre = nombre;
         this.raza = raza;
         this.edad = edad;
-        this.stats = new EnumMap<>(Stat.class);
-        this.mods = new EnumMap<>(Stat.class);
+        this.stats = new EnumMap<>(StatPerro.class);
+        this.mods = new EnumMap<>(StatPerro.class);
         this.estados = new HashSet<>();
 
         inicializarModificadores();
@@ -91,7 +91,7 @@ public class Perro {
      * raza y la edad.
      */
     private void inicializarModificadores() {
-        for (Stat stat : Stat.values()) {
+        for (StatPerro stat : StatPerro.values()) {
             mods.put(stat, 1.0 + raza.getMod(stat));
         }
 
@@ -121,15 +121,15 @@ public class Perro {
     private void aplicarModificadores(double energia, double hambre, double salud, double limpieza,
             double suenno, double ansiedad, double obediencia,
             double sociabilidad, double apego) {
-        mods.put(Stat.ENERGIA, mods.getOrDefault(Stat.ENERGIA, 1.0) + energia);
-        mods.put(Stat.HAMBRE, mods.getOrDefault(Stat.HAMBRE, 1.0) + hambre);
-        mods.put(Stat.SALUD, mods.getOrDefault(Stat.SALUD, 1.0) + salud);
-        mods.put(Stat.LIMPIEZA, mods.getOrDefault(Stat.LIMPIEZA, 1.0) + limpieza);
-        mods.put(Stat.SUENNO, mods.getOrDefault(Stat.SUENNO, 1.0) + suenno);
-        mods.put(Stat.ANSIEDAD, mods.getOrDefault(Stat.ANSIEDAD, 1.0) + ansiedad);
-        mods.put(Stat.OBEDIENCIA, mods.getOrDefault(Stat.OBEDIENCIA, 1.0) + obediencia);
-        mods.put(Stat.SOCIABILIDAD, mods.getOrDefault(Stat.SOCIABILIDAD, 1.0) + sociabilidad);
-        mods.put(Stat.APEGO, mods.getOrDefault(Stat.APEGO, 1.0) + apego);
+        mods.put(StatPerro.ENERGIA, mods.getOrDefault(StatPerro.ENERGIA, 1.0) + energia);
+        mods.put(StatPerro.HAMBRE, mods.getOrDefault(StatPerro.HAMBRE, 1.0) + hambre);
+        mods.put(StatPerro.SALUD, mods.getOrDefault(StatPerro.SALUD, 1.0) + salud);
+        mods.put(StatPerro.LIMPIEZA, mods.getOrDefault(StatPerro.LIMPIEZA, 1.0) + limpieza);
+        mods.put(StatPerro.SUENNO, mods.getOrDefault(StatPerro.SUENNO, 1.0) + suenno);
+        mods.put(StatPerro.ANSIEDAD, mods.getOrDefault(StatPerro.ANSIEDAD, 1.0) + ansiedad);
+        mods.put(StatPerro.OBEDIENCIA, mods.getOrDefault(StatPerro.OBEDIENCIA, 1.0) + obediencia);
+        mods.put(StatPerro.SOCIABILIDAD, mods.getOrDefault(StatPerro.SOCIABILIDAD, 1.0) + sociabilidad);
+        mods.put(StatPerro.APEGO, mods.getOrDefault(StatPerro.APEGO, 1.0) + apego);
     }
 
     /**
@@ -137,16 +137,16 @@ public class Perro {
      * modificadores.
      */
     private void inicializarStats() {
-        stats.put(Stat.ENERGIA, BASE_MAX_LEVEL);
-        stats.put(Stat.HAMBRE, BASE_MIN_LEVEL);
-        stats.put(Stat.FELICIDAD, statInicial(40, 80, mods.get(Stat.FELICIDAD)));
-        stats.put(Stat.SALUD, statInicial(60, 90, mods.get(Stat.SALUD)));
-        stats.put(Stat.LIMPIEZA, statInicial(30, 80, mods.get(Stat.LIMPIEZA)));
-        stats.put(Stat.SUENNO, statInicial(30, 70, mods.get(Stat.SUENNO)));
-        stats.put(Stat.ANSIEDAD, statInicial(10, 50, mods.get(Stat.ANSIEDAD)));
-        stats.put(Stat.OBEDIENCIA, statInicial(20, 70, mods.get(Stat.OBEDIENCIA)));
-        stats.put(Stat.SOCIABILIDAD, statInicial(30, 80, mods.get(Stat.SOCIABILIDAD)));
-        stats.put(Stat.APEGO, statInicial(20, 80, mods.get(Stat.APEGO)));
+        stats.put(StatPerro.ENERGIA, BASE_MAX_LEVEL);
+        stats.put(StatPerro.HAMBRE, BASE_MIN_LEVEL);
+        stats.put(StatPerro.FELICIDAD, statInicial(40, 80, mods.get(StatPerro.FELICIDAD)));
+        stats.put(StatPerro.SALUD, statInicial(60, 90, mods.get(StatPerro.SALUD)));
+        stats.put(StatPerro.LIMPIEZA, statInicial(30, 80, mods.get(StatPerro.LIMPIEZA)));
+        stats.put(StatPerro.SUENNO, statInicial(30, 70, mods.get(StatPerro.SUENNO)));
+        stats.put(StatPerro.ANSIEDAD, statInicial(10, 50, mods.get(StatPerro.ANSIEDAD)));
+        stats.put(StatPerro.OBEDIENCIA, statInicial(20, 70, mods.get(StatPerro.OBEDIENCIA)));
+        stats.put(StatPerro.SOCIABILIDAD, statInicial(30, 80, mods.get(StatPerro.SOCIABILIDAD)));
+        stats.put(StatPerro.APEGO, statInicial(20, 80, mods.get(StatPerro.APEGO)));
     }
 
     /**
@@ -198,7 +198,7 @@ public class Perro {
      * @param stat La estadística a consultar.
      * @return Valor de la estadística, o 0 si no está definida.
      */
-    public int getStat(Stat stat) {
+    public int getStat(StatPerro stat) {
         return stats.getOrDefault(stat, 0);
     }
 
@@ -208,7 +208,7 @@ public class Perro {
      * @param stat La estadística a consultar.
      * @return Modificador aplicado a la estadística, por defecto 1.0.
      */
-    public double getMod(Stat stat) {
+    public double getMod(StatPerro stat) {
         return mods.getOrDefault(stat, 1.0);
     }
 
@@ -267,7 +267,7 @@ public class Perro {
      * @param stat Estadística a modificar.
      * @param valor Nuevo valor de la estadística.
      */
-    public void setStat(Stat stat, int valor) {
+    public void setStat(StatPerro stat, int valor) {
         stats.put(stat, Herramientas.clamp(valor, BASE_MIN_LEVEL, BASE_MAX_LEVEL));
         actualizarEstados();
     }
@@ -280,7 +280,7 @@ public class Perro {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("🐶 Nombre: %s | Raza: %s | Edad: %s\n", nombre, raza, edadToString()));
 
-        for (Stat stat : Stat.values()) {
+        for (StatPerro stat : StatPerro.values()) {
             sb.append(String.format("%s %s: %d/100\n",
                     stat.getEmoji(), stat.getNombre(), stats.get(stat)));
         }

@@ -11,7 +11,7 @@ package tamagotchi.modelos;
  * Cada estadística tiene un nombre y un emoji asociado para su representación
  * visual.
  */
-public enum Stat {
+public enum StatPerro {
     ENERGIA("Energía", "⚡"),
     HAMBRE("Hambre", "🍖"),
     FELICIDAD("Felicidad", "😊"),
@@ -32,7 +32,7 @@ public enum Stat {
      * @param nombre Nombre descriptivo de la estadística.
      * @param emoji Emoji representativo de la estadística.
      */
-    Stat(String nombre, String emoji) {
+    StatPerro(String nombre, String emoji) {
         this.nombre = nombre;
         this.emoji = emoji;
     }

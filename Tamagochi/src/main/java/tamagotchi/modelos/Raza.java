@@ -47,7 +47,7 @@ public enum Raza {
     AKITA_INU("Akita Inu", -0.1, -0.2, 0.4, 0.1, 0.3, -0.4, 0.3, -0.3, -0.5); // Independiente, territorial y no muy sociable.
 
     private final String nombre;
-    private final EnumMap<Stat, Double> mods;
+    private final EnumMap<StatPerro, Double> mods;
 
     /**
      * Constructor para definir los modificadores de cada raza.
@@ -65,16 +65,16 @@ public enum Raza {
      */
     private Raza(String nombre, double energiaMod, double hambreMod, double saludMod, double limpiezaMod, double suennoMod, double ansiedadMod, double obedienciaMod, double sociabilidadMod, double apegoMod) {
         this.nombre = nombre;
-        this.mods = new EnumMap<>(Stat.class);
-        this.mods.put(Stat.ENERGIA, energiaMod);
-        this.mods.put(Stat.HAMBRE, hambreMod);
-        this.mods.put(Stat.SALUD, saludMod);
-        this.mods.put(Stat.LIMPIEZA, limpiezaMod);
-        this.mods.put(Stat.SUENNO, suennoMod);
-        this.mods.put(Stat.ANSIEDAD, ansiedadMod);
-        this.mods.put(Stat.OBEDIENCIA, obedienciaMod);
-        this.mods.put(Stat.SOCIABILIDAD, sociabilidadMod);
-        this.mods.put(Stat.APEGO, apegoMod);
+        this.mods = new EnumMap<>(StatPerro.class);
+        this.mods.put(StatPerro.ENERGIA, energiaMod);
+        this.mods.put(StatPerro.HAMBRE, hambreMod);
+        this.mods.put(StatPerro.SALUD, saludMod);
+        this.mods.put(StatPerro.LIMPIEZA, limpiezaMod);
+        this.mods.put(StatPerro.SUENNO, suennoMod);
+        this.mods.put(StatPerro.ANSIEDAD, ansiedadMod);
+        this.mods.put(StatPerro.OBEDIENCIA, obedienciaMod);
+        this.mods.put(StatPerro.SOCIABILIDAD, sociabilidadMod);
+        this.mods.put(StatPerro.APEGO, apegoMod);
     }
 
     /**
@@ -92,7 +92,7 @@ public enum Raza {
      * @param stat La estadística de la que se quiere obtener el modificador.
      * @return El modificador correspondiente a la estadística, o 0.0 si no existe.
      */
-    public double getMod(Stat stat) {
+    public double getMod(StatPerro stat) {
         return mods.getOrDefault(stat, 0.0);
     }
 }
