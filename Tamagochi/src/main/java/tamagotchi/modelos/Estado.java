@@ -1,10 +1,15 @@
-package slc.tamagochi;
+package tamagotchi.modelos;
 
 /**
- * Representa un estado que un perro puede tener en función de sus estadísticas.
- * Cada estado está vinculado a una estadística y tiene condiciones de activación.
- *
- * @author Sergio López Casado
+ * Proyecto: Tamagotchi - Simulador de Cuidado de Perros
+ * Autor: Sergio López Casado
+ * Correo: serlopcas.5@gmail.com
+ * LinkedIn: https://www.linkedin.com/in/sergiolopezcasado/
+ * GitHub: https://github.com/Serlopcas
+ * Fecha de creación: 29/01/2025
+ * Descripción: Representa un estado que un perro puede tener en función de sus
+ * estadísticas. Cada estado está vinculado a una estadística y tiene
+ * condiciones de activación.
  */
 public enum Estado {
     HAMBRIENTO(Stat.HAMBRE, 70, null, "Tiene hambre"),

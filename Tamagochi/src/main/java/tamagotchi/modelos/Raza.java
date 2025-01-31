@@ -1,14 +1,19 @@
-package slc.tamagochi;
+package tamagotchi.modelos;
 
 import java.util.EnumMap;
 
 /**
- * Representa las diferentes razas de perros, cada una con modificadores únicos para sus estadísticas.
- * Estos modificadores afectan la manera en que un perro evoluciona en términos de energía, hambre, salud, limpieza, etc.
- * 
- * Cada raza tiene valores que influyen en los **modificadores** de las estadísticas del perro.
- * 
- * @author Sergio López Casado
+ * Proyecto: Tamagotchi - Simulador de Cuidado de Perros
+ * Autor: Sergio López Casado
+ * Correo: serlopcas.5@gmail.com
+ * LinkedIn: https://www.linkedin.com/in/sergiolopezcasado/
+ * GitHub: https://github.com/Serlopcas
+ * Fecha de creación: 29/01/2025
+ * Descripción: Representa las diferentes razas de perros, cada una con
+ * modificadores únicos para sus estadísticas. Estos modificadores afectan la
+ * manera en que un perro evoluciona en términos de energía, hambre, salud,
+ * limpieza, etc. Cada raza tiene valores que influyen en los **modificadores**
+ * de las estadísticas del perro.
  */
 public enum Raza {
     // 🏃 Perros con MUCHA energía

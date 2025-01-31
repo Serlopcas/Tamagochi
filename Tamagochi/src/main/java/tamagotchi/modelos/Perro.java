@@ -1,17 +1,23 @@
-package slc.tamagochi;
+package tamagotchi.modelos;
 
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import tamagotchi.core.Herramientas;
 
 /**
- * Clase que representa un perro con diferentes atributos y estados dinámicos.
- * Cada perro tiene estadísticas (energía, hambre, salud, etc.), modificadores
- * según su raza y edad, y puede estar en ciertos estados según su condición.
- *
- * @author Sergio López Casado
+ * Proyecto: Tamagotchi - Simulador de Cuidado de Perros
+ * Autor: Sergio López Casado
+ * Correo: serlopcas.5@gmail.com
+ * LinkedIn: https://www.linkedin.com/in/sergiolopezcasado/
+ * GitHub: https://github.com/Serlopcas
+ * Fecha de creación: 29/01/2025
+ * Descripción: Clase que representa un perro con diferentes atributos y estados
+ * dinámicos. Cada perro tiene estadísticas (energía, hambre, salud, etc.),
+ * modificadores según su raza y edad, y puede estar en ciertos estados según su
+ * condición.
  */
 public class Perro {
 

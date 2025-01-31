@@ -1,10 +1,15 @@
-package slc.tamagochi;
+package tamagotchi.modelos;
 
 /**
- * Representa las estadísticas que tiene un perro en el juego.
- * Cada estadística tiene un nombre y un emoji asociado para su representación visual.
- * 
- * @author Sergio López Casado
+ * Proyecto: Tamagotchi - Simulador de Cuidado de Perros
+ * Autor: Sergio López Casado
+ * Correo: serlopcas.5@gmail.com
+ * LinkedIn: https://www.linkedin.com/in/sergiolopezcasado/
+ * GitHub: https://github.com/Serlopcas
+ * Fecha de creación: 29/01/2025
+ * Descripción: Representa las estadísticas que tiene un perro en el juego.
+ * Cada estadística tiene un nombre y un emoji asociado para su representación
+ * visual.
  */
 public enum Stat {
     ENERGIA("Energía", "⚡"),
